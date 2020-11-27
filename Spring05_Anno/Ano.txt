@@ -1,0 +1,49 @@
+Spring Annotation
+- 어노테이션은 자바 1.5부터 지원
+
+-Spring에서 Annotaion을 사용 하려면 다음과 같은 설정들을 필요로 한다.
+1.CommonAnnotaionBeanPostProcessor 클래스를 설정파일에 bean 객체로 등록하여 annotaion 적용
+	<bean class="org.springframework.beans.factory.annotaion.CommonAnnotaionBeanPostProcessor"/>
+2.<context:annotaion-config/>태그 이용
+	@Autowired, @Required, @Resource, @PostConstructor, @PreDestory 등의 
+	annotation을 자동 처리해주는 bean post processor	
+3.<context:component-scan base-package="클래스 주소"/>태그 이용
+	@Component, @Controller, @Service, @Repository등의 annotaion을 자동처리
+4.<mvc:annotaion-driven/>
+	@RequestMapping, @Valid 등 Spring mvc component들을 자동처리.
+	HandlerMapping, HandlerAdapter를 등록하여 @Controller에 요청 연결.
+	관련 해당 설정이 없어도 component-scan이 있으면 mvc application 동작.		
+	
+	
+	
+1.@Component
+클래스에 선언하며, 해당 클래스를 자동으로 bean을 등록
+bean의 이름은 해당 클래스명이 사용(첫글자는 소문자)
+("변경할 이름") -> 작성한 이름으로 bean이름이 생성
+
+2.@Autowired
+의존관계를 자동으로 설정.	
+해당타입의 bean 객체가 없거나 2개 이상일 경우 예외발생.
+btType으로 의존관계를 자동으로 설정. 같은 타입이 2개이상 존재하면 예외가 발생한다
+이럴때는 @Qualifier를 사용해 해결
+ex)	@Autowired
+	@Qualifier("hong")
+	private Student person;  -->hong 이름의 bean을 가져와라
+	
+3.@Qualifier
+@Autowired 어노테이션이 타입 기반이기에 2개이상 동일 타입 bean 객체가 존재할 때 특정 bean을 사용하도록 선언
+
+4.@Required
+필수 프로퍼티임을 명시. setter에 붙이면 된다.
+필수 프로퍼티를 설정하지 않을 경우 bean 생성시 예외 발생한다
+
+5.@Repository
+dao에 사용.  @Repository를 적용한 class는 DAO 클래스로 등록
+
+6.@Service
+@Service를 적용한 class는 비즈니스 로직(biz)로 등록
+
+7.Resource
+애플리케이션에서 필요로 하는 자원을 자동으로 연결할때 사용.
+name 속성에 자동으로 연결될 bean 객체의 이름을 입력
+@Resource(name="testDao")
