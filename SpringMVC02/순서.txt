@@ -7,3 +7,43 @@ SpringMVC02
 6. src/main/resources/mybatis/db.properties
 7. WEB-INF/spring/sqls/config.xml
 8. applicationContext, servlet-context
+
+
+SpringMVC02
+1. pom.xml : ojdbc6(+repository), mybatis, mybatis-spring, commons-dbcp, spring-orm(object relational mapping)
+ - 필요한 dependency를 추가
+ 
+2. web.xml : applicationContext.xml, maaping, encoding filter
+- context-param에 applicationContext.xml로 이름과 경로 변경 <- root-context.xml
+- servlet-mapping을 *.do로 url-pattern을 변경
+- filter 처리 (인코딩)
+
+3. /WEB-INF/spring/sqls/test.sql
+
+4. dto, dao, biz, controller
+- DaoImpl에 @repository와 sqlSessionTemplate에 @Autowired 추가
+- BizImpl에 @Service와 Dao 객체에 @Autowired 추가 => 객체 자동으로 주입
+- @Controller는 자동으로 작성되어 있고 Biz 객체에 @Autowired 추가
+
+5. src/main/resources/mybatis/board-mapper.xml
+- namespace 설정
+- 쿼리문 작성 영역
+
+6. src/main/resources/mybatis/db.properties
+- 드라이버 및 db 연결에 필요한 구성요소 작성
+
+7. /WEB-INF/spring/sqls/config.xml
+- 타입 별칭 설정
+- mapper와 연결
+
+8. applicationContext, servlet-context
+- properties 파일 설정 주입
+- dataSource로 주입된 파일 설정
+- sqlSession config 파일로 설정
+- sqlSessionTemplate 주입
+----------------------------
+ - 건들거 x 
+ ---------------------------
+ 
+ webapp가 WebContent라고 생각하면 됨
+ 웹 리소스들은 여기서 시작
