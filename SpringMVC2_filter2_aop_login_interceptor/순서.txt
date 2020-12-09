@@ -1,0 +1,98 @@
+SpringMVC02
+1. pom.xml : ojdbc6(+repository), mybatis, mybatis-spring, commons-dbcp, spring-orm
+2. web.xml : applicationContext.xml, mapping, encoding filter
+3. /WEB-INF/spring/sqls/test.sql
+4. dto, dao, biz, controller
+5. src/main/resources/mybatis/board-mapper.xml
+6. src/main/resources/mybatis/db.properties
+7. WEB-INF/spring/sqls/config.xml
+8. applicationContext, servlet-context
+
+
+SpringMVC02
+1. pom.xml : ojdbc6(+repository), mybatis, mybatis-spring, commons-dbcp, spring-orm(object relational mapping)
+ - 필요한 dependency를 추가
+ 
+2. web.xml : applicationContext.xml, maaping, encoding filter
+- context-param에 applicationContext.xml로 이름과 경로 변경 <- root-context.xml
+- servlet-mapping을 *.do로 url-pattern을 변경
+- filter 처리 (인코딩)
+
+3. /WEB-INF/spring/sqls/test.sql
+
+4. dto, dao, biz, controller
+- DaoImpl에 @repository와 sqlSessionTemplate에 @Autowired 추가
+- BizImpl에 @Service와 Dao 객체에 @Autowired 추가 => 객체 자동으로 주입
+- @Controller는 자동으로 작성되어 있고 Biz 객체에 @Autowired 추가
+
+5. src/main/resources/mybatis/board-mapper.xml
+- namespace 설정
+- 쿼리문 작성 영역
+
+6. src/main/resources/mybatis/db.properties
+- 드라이버 및 db 연결에 필요한 구성요소 작성
+
+7. /WEB-INF/spring/sqls/config.xml
+- 타입 별칭 설정
+- mapper와 연결
+
+8. applicationContext, servlet-context
+- properties 파일 설정 주입
+- dataSource로 주입된 파일 설정
+- sqlSession config 파일로 설정
+- sqlSessionTemplate 주입
+----------------------------
+ - 건들거 x 
+ ---------------------------
+ 
+ webapp가 WebContent라고 생각하면 됨
+ 웹 리소스들은 여기서 시작
+ 
+ //////////////////////////////////////////filter
+ 9.com/mvc/upgrade/common/filter/LogFilter(impl javax.servlet.Filter)  ->클래스 생성
+ 10. web.xml : filter    -> web.xml 에 필터태그 추가해줌
+ 
+ ////////////////////////////////////////////_aop
+ 11.pom.xml : aspectjweaver, aspectjrt
+ 	//aspectjwaver
+ 	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjweaver</artifactId>
+	    <version>1.9.5</version>
+	    <scope>runtime</scope>
+	</dependency>
+ 12. com/mvc/upgrade/common/aop/LogAop -->클래스 생성
+ 13. WEB_INF/spring/appServlet/aop-context.xml ->생성 후 설정 네임스페이스 aop체크
+ 14. web.xml : aop-context 추가 (init-param)
+ 15. src/main/resources/log4j.xml (logger 추가 및 log level trace)
+ 
+ ///////////////////////////////////////////////////////////////////////////////////////////_login
+ 16.pom.xml : jackson-core-asl, jackson-mapper-asl
+ 	<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-core-asl</artifactId>
+	    <version>1.9.13</version>
+	</dependency>
+ 	<!--jackson mapper -->
+ 	<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+	<dependency>
+    	<groupId>org.codehaus.jackson</groupId>
+    	<artifactId>jackson-mapper-asl</artifactId>
+    	<version>1.9.13</version>
+	</dependency>
+17.WEB-INF/spring/sqls/test.sql  -> 회원 테이블 생성	
+18. dto/dao/biz /controller생성
+19. src/main/resources/mybatis/member-mapper.xml  -> mapper 파일생성(쿼리)
+20. WEB-INF/spring/sqls/config.xml ->등록
+
+
+///////////////////////////////////////////_interceptor
+21. com/mvc/upgrade/common/interceptor/LoginInterceptor(impl HandlerInterceptor)
+22. servlet-context : interceptor 추가
+
+ 	
+ 
+ 
+ 
